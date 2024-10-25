@@ -63,12 +63,26 @@ Currently working on the VSDSquadron Mini RISC-V Development Kit as part of my i
 
 ![tk1_11](https://github.com/user-attachments/assets/3221b89f-c111-4e64-bf23-03fba3abf65a)
 
--  Now lets check the assembly code for our main C program.
--  Below is the command to check the assembly code
+-  Now let's Breakdown our command mentioned above,
+-  riscv64-unknown-elf-gcc -o1 -mabi=lp64 -march=rv64i -o sum1ton.o sum1ton.c
+
+          - riscv64-unknown-elf-gcc: This is the RISC-V cross-compiler (GNU Compiler Collection for RISC-V). It's designed to compile code for a RISC-V 64-bit architecture. riscv64-unknown-elf refers to the target platform where riscv64 specifies the 64-bit RISC-V architecture.
+          - unknown is a placeholder for the vendor.
+          - elf indicates the compiler produces an ELF (Executable and Linkable Format) output.
+          - -mabi=lp64: This specifies the ABI (Application Binary Interface) to use.
+          - lp64 means that the program will use 64-bit long integers and pointers, which is typical for a 64-bit system.
+          - -march=rv64i: This specifies the target architecture for the compiled code.
+          - rv64i stands for the 64-bit RISC-V base integer instruction set, which is the core instruction set for 64-bit RISC-V processors.
+          - -o sum1ton.o: The -o option tells the compiler to produce an output file named sum1ton.o.
+          - In this case, it’s generating an object file (.o), which is a compiled version of sum1ton.c, but not yet linked into a final executable.
+          - sum1ton.c: This is the source C file that is being compiled.
+          
+- Now let's check the assembly code for our main C program.
+- Below is the command to check the assembly code
 
         riscv64-unknown-elf-objdump -d sum1ton.o
 
-- After running that command we need to search for our main code assembly, to do that we need to first we need to run the below mentioned command
+- After running that command we need to search for our main code assembly, to do that we need first we need to run the below-mentioned command
 
       riscv64-unknown-elf-objdump -d sum1ton.o | less  
 
@@ -82,4 +96,3 @@ Currently working on the VSDSquadron Mini RISC-V Development Kit as part of my i
 
 ![tk1_13](https://github.com/user-attachments/assets/6f292296-b767-4f5f-b883-5e6ef4992a15)
 ![tk1_9](https://github.com/user-attachments/assets/bdcf063d-e4fa-4097-b766-9069fd724c41)
-

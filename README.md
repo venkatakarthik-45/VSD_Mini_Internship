@@ -107,9 +107,7 @@ Currently working on the VSDSquadron Mini RISC-V Development Kit as part of my i
 
 # TASK - 2                    
 
-## LAB - 1
-
-### SPIKE SIMULATION AND DEBUGGING OUR SUM1TON.C CODE USING SPIKE
+## LAB - 1 SPIKE SIMULATION AND DEBUGGING OUR SUM1TON.C CODE USING SPIKE
 
 - Executable File: Typically, we would use a complete executable file rather than an object file. If you want to run the program, you might need to link it first, producing an executable file.
 
@@ -133,6 +131,8 @@ It acts as a bridge between the simulator and the program being run, handling sy
 This is the RISC-V object file (the compiled version of your C program) that you want to run in the Spike simulator. Note that it should ideally be a runnable binary, so if you've only compiled it to an object file, you might need to link it first to produce an executable.
 What it does:
 Running spike pk sum1ton.o executes the sum1ton.o program in the Spike simulator, utilizing the Proxy Kernel for necessary system services.
+
+![tk2_1](https://github.com/user-attachments/assets/ca56a40f-0834-4ebb-9983-65fd5f84925d)
 
 
 ## LAB - 2 DIGITAL DESIGN APPLICATION - RISC-V SEVEN SEGMENT DISPLAY DECODER.
@@ -220,6 +220,10 @@ F	0b1000111	          a, e, f, g
               return 0;
           }
 
+![tk2_2](https://github.com/user-attachments/assets/d5ddca28-f496-4ef2-a390-9800a7a4c062)
+![tk2_3](https://github.com/user-attachments/assets/8a38f8eb-6d83-485a-9798-7669bc402450)
+
+
 - Compilation steps are same as the previous one, Below are the steps we need to follow for our application as we did previously
 
 1) gcc
@@ -242,9 +246,16 @@ F	0b1000111	          a, e, f, g
           riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o seven_segment_display.o seven_segment_display.c
 
 
+![tk2_5](https://github.com/user-attachments/assets/21f728a1-03a8-499d-b867-2a126a2f062c)
+![tk2_6](https://github.com/user-attachments/assets/9054fed4-3e0b-4666-a4da-96ac92827dec)
+
+
 4) Let's look into the object file if we need to but it's optional,
 
           riscv64-unknown-elf-objdump -d seven_segment_display.o
+
+![tk2_4_7segmentobjfile](https://github.com/user-attachments/assets/de2c9271-3340-424e-bdab-49ba7c031801)
+
  
 5) Let's simulate using spike
 
@@ -276,6 +287,9 @@ This is the object file that you want to execute. It contains the compiled code 
 This flag enables debugging mode. When used, Spike provides additional information during the execution of the program, which can help in diagnosing issues or understanding the program's behavior step-by-step.
 In debugging mode, you might see information about instruction execution, register values, memory accesses, and other details that can be crucial for debugging your application.
 
+- Below is the final output of our application and finally we proved O0 = O1.
+
+![tk2_7_final_output](https://github.com/user-attachments/assets/983027eb-61da-458b-b7c5-8c2df3f5ce0d)
 
 
 

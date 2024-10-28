@@ -104,3 +104,180 @@ Currently working on the VSDSquadron Mini RISC-V Development Kit as part of my i
 
 ![tk1_13](https://github.com/user-attachments/assets/6f292296-b767-4f5f-b883-5e6ef4992a15)
 ![tk1_9](https://github.com/user-attachments/assets/bdcf063d-e4fa-4097-b766-9069fd724c41)
+
+# TASK - 2                    
+
+## LAB - 1
+
+### SPIKE SIMULATION AND DEBUGGING OUR SUM1TON.C CODE USING SPIKE
+
+- Executable File: Typically, we would use a complete executable file rather than an object file. If you want to run the program, you might need to link it first, producing an executable file.
+
+          riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o sum1ton.o sum1ton.c
+
+- The command that we need to simulate using spike is shown below,
+
+          spike pk sum1ton.o
+  
+- The command spike pk sum1ton.o is used to run a RISC-V program on the Spike simulator, which is an architecture simulator for RISC-V. Here’s a breakdown of what each part of the command does:
+
+Breakdown of the command:
+- spike:
+Spike is a RISC-V ISA (Instruction Set Architecture) simulator that simulates RISC-V programs on the architecture. It allows you to run RISC-V binaries in a controlled environment.
+
+- pk:
+This stands for Proxy Kernel, which is a minimal operating system that provides basic system calls and an environment for running RISC-V binaries.
+It acts as a bridge between the simulator and the program being run, handling system calls and providing the necessary infrastructure for executing the binary.
+
+- sum1ton.o:
+This is the RISC-V object file (the compiled version of your C program) that you want to run in the Spike simulator. Note that it should ideally be a runnable binary, so if you've only compiled it to an object file, you might need to link it first to produce an executable.
+What it does:
+Running spike pk sum1ton.o executes the sum1ton.o program in the Spike simulator, utilizing the Proxy Kernel for necessary system services.
+
+
+## LAB - 2 DIGITAL DESIGN APPLICATION - RISC-V SEVEN SEGMENT DISPLAY DECODER.
+
+### 7-Segment Display Decoder
+
+- Introduction : 
+The 7-Segment Display Decoder project is a fundamental exercise in digital logic design, where the goal is to simulate the functioning of a 7-segment display using a C program. A 7-segment display consists of seven LED segments arranged in a figure-eight pattern that can represent decimal digits and some alphabetic characters by illuminating specific segments. This project involves taking a hexadecimal input (ranging from 0 to 15) and decoding it to determine which segments to light up on the display. Understanding this concept is crucial for anyone interested in digital electronics and embedded systems, as it forms the basis for displaying numerical data in many electronic devices.
+
+Project Overview
+- Functionality
+1) Input: The user enters a hexadecimal digit (0-9 or A-F).
+2) Processing: The program maps the input to a binary representation that determines which segments of the display will be illuminated.
+3) Output: The program displays the corresponding segments that should be lit up, both in binary format and as an ASCII representation for visual confirmation.
+
+- How It Works
+1) Binary Encoding: Each of the 7 segments of the display (labeled a to g) corresponds to a binary bit. The segments light up in specific combinations to represent hexadecimal digits.
+2) Lookup Table: A predefined array holds the binary codes for each hexadecimal digit, making it easy to reference which segments to light up for a given input.
+3) User Interaction: The program prompts the user for input, checks the validity of the input, and then retrieves the appropriate segment pattern from the lookup table.
+
+- Example of Segment Encoding
+
+Hex	Segment Code	Segments Lit
+0	0b1111110	          a, b, c, d, e, f
+1	0b0110000	          b, c
+2	0b1101101	          a, b, d, e, g
+3	0b1111001	          a, b, c, d, g
+4	0b0110011	          b, c, f, g
+5	0b1011011	          a, c, d, f, g
+6	0b1011111	          a, c, d, e, f, g
+7	0b1110000	          a, b, c
+8	0b1111111	          a, b, c, d, e, f, g
+9	0b1111011	          a, b, c, d, f, g
+A	0b1110111	          a, b, c, e, f, g
+B	0b0011111	          c, d, e, f, g
+C	0b1001110	          a, d, e, f
+D	0b0111101	          b, c, d, e, g
+E	0b1001111	          a, d, e, f, g
+F	0b1000111	          a, e, f, g
+
+- Implementation
+
+- C CODE
+
+          #include <stdio.h>
+
+          void displaySegment(int num) {
+              // 7-segment display binary codes for hexadecimal 0-F
+              const char *segmentCodes[] = {
+        "0b1111110", // 0
+        "0b0110000", // 1
+        "0b1101101", // 2
+        "0b1111001", // 3
+        "0b0110011", // 4
+        "0b1011011", // 5
+        "0b1011111", // 6
+        "0b1110000", // 7
+        "0b1111111", // 8
+        "0b1111011", // 9
+        "0b1110111", // A
+        "0b0011111", // B
+        "0b1001110", // C
+        "0b0111101", // D
+        "0b1001111", // E
+        "0b1000111"  // F
+              };
+
+              // Print the corresponding segment code
+              printf("7-Segment Display for %X: %s\n", num, segmentCodes[num]);
+            }
+
+          int main() {
+              int input;
+
+              printf("Enter a number (0-15) to display on a 7-segment: ");
+              scanf("%d", &input);
+
+              // Check if the input is in the valid range
+              if (input < 0 || input > 15) {
+                  printf("Invalid input. Please enter a number between 0 and 15.\n");
+              } else {
+        displaySegment(input);
+              }
+
+              return 0;
+          }
+
+- Compilation steps are same as the previous one, Below are the steps we need to follow for our application as we did previously
+
+1) gcc
+2) RISC-V gcc
+3) Spike
+
+1) first we need to create a file and save the code which we wrote.
+
+          gedit seven_segment_display.c &
+
+2) Let's compile it and check the output with GCC
+
+          gcc seven_segment_display.c
+          ./a.out
+
+
+3) Let's link our compiled file to an executable file, as we typically use a complete executable file rather than an object file. If you want to run the program, you'll need to link it first to produce an executable file.
+
+          riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o seven_segment_display.o seven_segment_display.c
+          riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o seven_segment_display.o seven_segment_display.c
+
+
+4) Let's look into the object file if we need to but it's optional,
+
+          riscv64-unknown-elf-objdump -d seven_segment_display.o
+ 
+5) Let's simulate using spike
+
+          spike pk seven_segment_display.o
+
+- Let's breakdown the above command,
+ 
+- spike:
+Spike is the RISC-V instruction set simulator. It simulates RISC-V processors and allows you to run binaries compiled for RISC-V architecture. It's useful for testing and debugging RISC-V programs without needing actual hardware.
+
+- pk:
+This stands for "Proxy Kernel." The proxy kernel is a lightweight operating system that runs alongside Spike, providing a minimal execution environment for the program. It allows the execution of bare-metal applications (those that run without an operating system).
+
+- seven_segment_display.o:
+This is the object file that you want to execute. It contains the compiled code (usually resulting from a C source file) for your specific application related to the seven-segment display.
+
+- What It Does: When you run spike pk seven_segment_display.o, the following occurs:
+1) Spike initializes the simulation environment.
+2) The proxy kernel (pk) is started, which sets up the necessary runtime environment for the program.
+3) The seven_segment_display.o binary is loaded and executed.
+- This command is typically used to test embedded applications or simulations for RISC-V processors, especially for systems where you want to run low-level code directly without a full operating system.
+
+- Now let's debug the seven_segment_display file by using the following command
+
+          spike -d pk seven_segment_display.o 
+
+- Everything is similar to the above explanation but only one change which is "-d".
+- -d:
+This flag enables debugging mode. When used, Spike provides additional information during the execution of the program, which can help in diagnosing issues or understanding the program's behavior step-by-step.
+In debugging mode, you might see information about instruction execution, register values, memory accesses, and other details that can be crucial for debugging your application.
+
+
+
+
+
+
